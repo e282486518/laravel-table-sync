@@ -53,6 +53,13 @@ class MeetingSyncService extends SyncService
     }
 ```
 
+步骤四: 执行命令
+
+可以使用 `php artisan  xxxxx` 执行第三步定义的命令
+
+但是, 这里推荐使用 Schedule 执行命令, 参考laravel文档, 用一个cron命令管理项目中所有自动执行的命令
+`php artisan schedule:run`
+
 
 ### 服务端代码
 
