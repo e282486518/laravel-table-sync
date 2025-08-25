@@ -1,0 +1,29 @@
+{
+    "name": "e282486518/laravel-table-sync",
+    "description": "使用api方式增量同步数据表",
+    "keywords": [
+        "laravel",
+        "database",
+        "api",
+        "eloquent"
+    ],
+    "type": "library",
+    "require": {
+        "php": "^7.2|^8.0",
+        "illuminate/database": "^7.0|^8.0|^9.0|^10.0|^11.0|^12.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "e282486518",
+            "email": "phphome@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "e282486518\\LaravelTableSync\\": "src"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
