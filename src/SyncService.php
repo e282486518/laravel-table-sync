@@ -209,7 +209,8 @@ abstract class SyncService
     {
         // 添加本服务特有的字段, 默认值
         $data = array_merge($data, $this->mapping_add);
-        $this->_model->create($data);
+        $model = $this->_model->create($data);
+        $this->afterCreate($model->{$this->key});
     }
 
     /**
@@ -219,15 +220,24 @@ abstract class SyncService
     {
         // 保留本地特有字段，只更新从远程获取的字段
         $meeting->update($data);
-        $this->afterUpdate($meeting->id);
+        $this->afterUpdate($meeting->{$this->key});
     }
 
     /**
-     * 更新数据
+     * 更新后处理数据
      * @param $id
      * @return void
      */
     protected function afterUpdate($id): void {
+        //$this->_model->getOne($id, true);
+    }
+    
+    /**
+     * 创建后处理数据
+     * @param $id
+     * @return void
+     */
+    protected function afterCreate($id): void {
         //$this->_model->getOne($id, true);
     }
 
