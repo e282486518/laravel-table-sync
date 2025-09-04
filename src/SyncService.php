@@ -188,15 +188,20 @@ abstract class SyncService
         $data = Arr::except($data, $this->filter);
         // 再替换字段名
         foreach ($this->mapping_replace as $key_serv => $key_local) {
-            if (array_key_exists($key_serv, $data)) {
-                $data[$key_local] = Arr::get($data, $key_serv);
-                unset($data[$key_serv]);
+            if (isset($data[$key_serv])) {
+                $data[$key_local] = $data[$key_serv]; // 赋值给本地字段
+                unset($data[$key_serv]); // 删除原服务器字段，避免冲突
             }
         }
         // json字符串 => json
         foreach ($this->json_fields as $field) {
             if (isset($data[$field]) && is_string($data[$field])) {
                 $data[$field] = json_decode($data[$field], true);
+                // 容错：若JSON解码失败，保留原字符串（避免数据丢失）
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    Log::warning("JSON解码失败，字段: {$field}，值: {$data[$field]}");
+                    $data[$field] = $data[$field]; // 保留原字符串
+                }
             }
         }
         return $data;
